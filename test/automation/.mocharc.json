@@ -1,5 +1,10 @@
 {
   "extension": ["ts"],
   "spec": "test/**/*.test.ts",
-  "require": ["ts-node/register", "test/automation/hooks.ts"]
+  "require": "ts-node/register",
+  "node-option": [
+    "experimental-specifier-resolution=node",
+    "loader=ts-node/esm"
+  ],
+  "timeout": 30000
 }
