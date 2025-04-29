@@ -1,17 +1,8 @@
 # Draw.io diagram plugin for Obsidian.md
 
-这个插件为 Obsidian 引入了可以包含在笔记中或作为独立文件的图表功能。图表以 SVG 文件形式创建（也支持 .drawio 扩展名）。
+这个插件为 Obsidian 引入了可以包含在笔记中或作为独立文件的图表功能。图表以 SVG 文件形式创建。
 
-![Screenshot](/docs/image/screenshot1.png)
-
-## 使用方法
-### 添加/插入新图表
-
-![Insert new diagram](/docs/image/screenshot2.png)
-
-### 编辑现有图表
-
-![Edit existing diagram](/docs/image/screenshot3.png)
+该插件是[drawio-obsidian](https://github.com/zapthedingbat/drawio-obsidian "drawio-obsidian")的Fork版本，添加以 .drawio 文件形式创建。
 
 ## 开发指南
 
