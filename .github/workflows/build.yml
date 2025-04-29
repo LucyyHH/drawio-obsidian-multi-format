@@ -33,4 +33,14 @@ jobs:
 
       # 暂时跳过测试，需要进一步配置测试环境
       # - name: Run tests
-      #   run: npm run automation 
+      #   run: npm run automation
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: obsidian-plugin-build
+          path: |
+            dist/main.js
+            dist/manifest.json
+            dist/styles.css
+          retention-days: 5 

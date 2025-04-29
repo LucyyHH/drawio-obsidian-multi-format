@@ -4,7 +4,9 @@
   "description": "This is a draw.io plugin for Obsidian (https://obsidian.md)",
   "scripts": {
     "automation": "cross-env TS_NODE_PROJECT=test/automation/tsconfig.json mocha --require ts-node/register --exit --config ./test/automation/.mocharc.json",
-    "build": "rollup --config rollup.config.js"
+    "build": "npx rollup --config rollup.config.js",
+    "dev": "npx rollup --config rollup.config.js -w",
+    "test-local": "npm run build && node scripts/copy-to-vault.js"
   },
   "keywords": [],
   "author": "",
