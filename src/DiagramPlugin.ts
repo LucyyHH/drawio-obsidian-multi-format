@@ -126,6 +126,14 @@ export default class DiagramPlugin extends Plugin {
           this.editNewDiagramFile()
         }
     });
+
+      this.addCommand({
+        id: "create-new-drawio",
+        name: "Create a new Draw.io diagram",
+        callback: () => {
+          this.editNewDrawioFile()
+        }
+    });
   }
 
   private tryAddFileExplorerButton() {
@@ -218,10 +226,26 @@ export default class DiagramPlugin extends Plugin {
       menu.addItem((item: MenuItem) => {
         this.moveMenuItem(menu, item, 1);
         item
-          .setTitle("New diagram")
+          .setTitle("New svg diagram")
           .setIcon("create-new-diagram")
           .onClick(async () => {
             const file = await this.createNewDiagramFile(abstractFile);
+            const leaf = this.app.workspace.getLeaf(false);
+            await leaf.setViewState({
+              type: DIAGRAM_EDIT_VIEW_TYPE,
+              state: { file: file.path },
+            });
+          });
+      });
+
+      // 添加新建Draw.io图表菜单项
+      menu.addItem((item: MenuItem) => {
+        this.moveMenuItem(menu, item, 2);
+        item
+          .setTitle("新建Draw.io图表")
+          .setIcon("create-new-diagram")
+          .onClick(async () => {
+            const file = await this.createNewDrawioFile(abstractFile);
             const leaf = this.app.workspace.getLeaf(false);
             await leaf.setViewState({
               type: DIAGRAM_EDIT_VIEW_TYPE,
@@ -279,8 +303,31 @@ export default class DiagramPlugin extends Plugin {
     return file;
   }
 
+  private async createNewDrawioFile(folder?: TFolder) {
+    const targetFolder = folder
+      ? folder
+      : this.app.fileManager.getNewFileParent("");
+    const newFilePath = await this.getNewDiagramFilePath(
+      targetFolder,
+      "Untitled Diagram",
+      "drawio"
+    );
+    // drawio文件也是使用相同的空SVG内容
+    const file = await this.app.vault.create(newFilePath, EMPTY_DIAGRAM_SVG);
+    return file;
+  }
+
   private async editNewDiagramFile() {
     const file = await this.createNewDiagramFile();
+    const leaf = this.app.workspace.getLeaf(false);
+    await leaf.setViewState({
+      type: DIAGRAM_EDIT_VIEW_TYPE,
+      state: { file: file.path },
+    });
+  }
+
+  private async editNewDrawioFile() {
+    const file = await this.createNewDrawioFile();
     const leaf = this.app.workspace.getLeaf(false);
     await leaf.setViewState({
       type: DIAGRAM_EDIT_VIEW_TYPE,
